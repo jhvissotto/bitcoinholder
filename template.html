@@ -1,0 +1,117 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Bitcoin Holder</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--or:#f7931a;--ink:#1a1a1a;--mut:#6f6f6f;--line:#ececec;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:0}body{margin:0;background:#fff;color:var(--ink);font:15px/1.5 'IBM Plex Sans',system-ui,sans-serif}
+header{background:#fff;border-bottom:3px solid var(--or);display:flex;align-items:center;gap:20px;padding:10px 16px}
+header h1{font-size:22px;margin:0;letter-spacing:-.01em;white-space:nowrap}header h1 b{color:var(--or)}
+nav{display:flex;gap:14px;overflow-x:auto;font-size:13px}nav a{color:var(--mut);text-decoration:none;white-space:nowrap}nav a:hover{color:var(--or)}
+main{max-width:1000px;margin:0 auto;padding:36px 16px 64px}
+.card{border:1px solid var(--line);border-radius:10px;padding:22px 20px;margin-bottom:44px}
+h2{font-size:17px;margin:0 0 2px}.cap{color:var(--mut);font-size:13px;margin:0 0 16px}
+svg.c{width:100%;display:block}
+.leg{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--mut);margin-bottom:4px}.leg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px}
+.tip{font:12.5px 'IBM Plex Mono',monospace;min-height:19px;color:var(--mut)}
+.tbl{overflow-x:auto}table{border-collapse:collapse;width:100%;font:12.5px 'IBM Plex Mono',monospace}
+td,th{padding:6px 7px;text-align:right;white-space:nowrap}th{color:var(--mut);font-weight:500}td:first-child,th:first-child{text-align:left;font-family:'IBM Plex Sans',sans-serif;font-weight:600}
+td.y{border-left:1px solid var(--line);font-weight:600}
+.tg{float:right;display:flex;margin-left:8px}.tg button{font:inherit;font-size:12.5px;background:#fff;border:1px solid var(--or);color:var(--or);padding:2px 10px;cursor:pointer}.tg button:first-child{border-radius:6px 0 0 6px}.tg button:last-child{border-radius:0 6px 6px 0;border-left:0}.tg button.on{background:var(--or);color:#fff}
+#ty{table-layout:fixed;width:610px}#ty th,#ty td{padding:6px 8px;width:80px}#ty th:nth-child(1),#ty td:nth-child(1){width:100px}#ty th:nth-child(2),#ty td:nth-child(2){width:75px}#ty th:nth-child(3),#ty td:nth-child(3){width:105px}#ty th:nth-child(4),#ty td:nth-child(4){width:90px}
+footer{border-top:3px solid var(--or);padding:20px 16px 36px;text-align:center;color:var(--mut);font-size:12.5px}footer b{color:var(--ink);font-size:28px;letter-spacing:-.01em}footer b span{color:var(--or)}footer p{margin:6px 0 0}
+.note{color:var(--mut);font-size:12.5px}
+</style></head><body>
+<header><h1>Bitcoin <b>Holder</b></h1><nav><a href="#ca">Performance · Yearly</a><a href="#q">Performance · Quarterly</a><a href="#m">Performance · Monthly</a><a href="#vs">BTC vs Indices</a><a href="#dd">Drawdown</a><a href="#yt">Yearly Data</a><a href="#qb">Returns · Quarterly</a><a href="#mb">Returns · Monthly</a><a href="#dist">Distribution</a><a href="#grid">Heatmap</a></nav></header>
+<main>
+<div class="card" id="ca"><div class="tg"><button data-m="r">Return</button><button data-m="a">Absolute</button></div><h2>Historical Performance · Yearly</h2><p class="cap cc" data-r="Log scale, base 100 = Sep/2014 close, year-end closes"></p><svg class="c" id="c0"></svg></div>
+<div class="card" id="q"><div class="tg"><button data-m="r">Return</button><button data-m="a">Absolute</button></div><h2>Historical Performance · Quarterly</h2><p class="cap cc" data-r="Log scale, base 100 = Sep/2014 close, quarter-end closes"></p><svg class="c" id="c2"></svg></div>
+<div class="card" id="m"><div class="tg"><button data-m="r">Return</button><button data-m="a">Absolute</button></div><h2>Historical Performance · Monthly</h2><p class="cap cc" data-r="Log scale, base 100 = Sep/2014 close, month-end closes"></p><svg class="c" id="c1"></svg></div>
+<div class="card" id="vs"><h2>BTC vs Dow Jones, S&amp;P 500 and Russell 2000</h2><p class="cap">Log scale, all rebased to 100 in Sep/2014</p><div class="leg" id="leg"></div><svg class="c" id="c3"></svg><div class="tip" id="t3">Hover or touch the chart.</div></div>
+<div class="card" id="dd"><h2>Drawdown</h2><p class="cap" id="ds8"></p><svg class="c" id="c8"></svg><div class="tip" id="t8">Hover or touch the chart.</div></div>
+<div class="card tbl" id="yt"><h2>Yearly Data</h2><p class="cap">BTC price in US$, year-end closes (latest month for the current year). CAGR is measured from the same month 5 and 10 years earlier. *Since Sep/2014</p><table id="ty"></table></div>
+<div class="card" id="qb"><h2>Quarterly Returns</h2><p class="cap">BTC, quarter over quarter</p><svg class="c" id="c5"></svg></div>
+<div class="card" id="mb"><h2>Monthly Returns</h2><p class="cap">BTC, month over month</p><svg class="c" id="c4"></svg></div>
+<div class="card" id="dist"><h2>Distribution of Quarterly Returns</h2><p class="cap" id="ds2"></p><svg class="c" id="c7"></svg></div>
+<div class="card"><h2>Distribution of Monthly Returns</h2><p class="cap" id="ds"></p><svg class="c" id="c6"></svg></div>
+<div class="card tbl" id="grid"><h2>Monthly Returns by Year</h2><p class="cap">BTC, month over month (%)</p><table id="g"></table></div>
+</main>
+<footer><b>Bitcoin <span>Holder</span></b><p>Monthly closing prices from Yahoo Finance (BTC-USD, ^DJI, ^GSPC, ^RUT). The latest month is partial.</p><p>For information only, not investment advice. Past performance does not guarantee future results.</p></footer>
+<script>
+const D=__DATA__,N=D.d.length,MN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const fm=(v,d=1)=>v.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const pc=(v,d=1)=>(v>=0?'+':'')+fm(v,d)+'%';
+const OR='#f7931a',DK='#8f3a1c',col=v=>v>=0?OR:DK;
+const ml=i=>MN[+D.d[i].slice(5)-1]+'/'+D.d[i].slice(0,4);
+const B=D.btc,mr=B.map((c,i)=>i?(c/B[i-1]-1)*100:null);
+// quarters
+const Q=[];D.d.forEach((d,i)=>{const k=d.slice(0,4)+'-'+Math.ceil(+d.slice(5)/3);if(!Q.length||Q[Q.length-1].k!=k)Q.push({k,n:0});const q=Q[Q.length-1];q.n++;q.c=B[i]});
+const ql=q=>'Q'+q.k.slice(5)+'/'+q.k.slice(0,4);
+function bars(id,items,o){
+ const svg=document.getElementById(id),W=svg.clientWidth||900,H=o.h||280,P={l:56,r:8,t:8,b:24};let lo,hi,ticks,f;
+ if(o.log){lo=Math.log(o.lo||40);hi=Math.log(o.hi||40000);f=Math.log;ticks=o.ticks||[50,100,200,500,1000,2000,5000,10000,20000]}
+ else{const v=items.map(i=>i.v);hi=Math.max(0,...v);lo=Math.min(0,...v);const r=hi-lo||1;f=x=>x;ticks=[0,1,2,3,4].map(k=>lo+r*k/4)}
+ const Y=x=>P.t+(hi-f(x))/(hi-lo)*(H-P.t-P.b),Y0=Y(o.log?(o.b||100):0),bw=(W-P.l-P.r)/items.length;let g='';
+ ticks.forEach(t=>g+=`<line x1="${P.l}" x2="${W-P.r}" y1="${Y(t)}" y2="${Y(t)}" stroke="${t==(o.log?(o.b||100):0)?'#999':'#ececec'}"/><text x="${P.l-6}" y="${Y(t)+4}" text-anchor="end" font-size="11" fill="#6f6f6f">${fm(t,o.log?0:o.d||0)}${o.log?'':o.u||''}</text>`);
+ items.forEach((it,i)=>{const X=P.l+i*bw,y=Math.min(Y(it.v),Y0);g+=`<rect x="${X+bw*.1}" y="${y}" width="${Math.max(bw*.8,1)}" height="${Math.max(Math.abs(Y(it.v)-Y0),1)}" fill="${it.c}" opacity="${it.p?.5:1}"><title>${it.t}</title></rect>`;
+  if(it.x)g+=`<text x="${X+bw/2}" y="${H-7}" text-anchor="middle" font-size="11" fill="#6f6f6f">${it.x}</text>`});
+ svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.style.height=H+'px';svg.innerHTML=g}
+let MODE='r';
+function dist(id,r,bin,cap,u){const lo=Math.floor(Math.min(...r)/bin)*bin,hi=Math.ceil(Math.max(...r)/bin)*bin,cnt=Array((hi-lo)/bin).fill(0);r.forEach(v=>cnt[Math.min(cnt.length-1,Math.floor((v-lo)/bin))]++);
+ bars(id,cnt.map((n,k)=>{const a=lo+k*bin;return{v:n,c:a>=0?OR:DK,t:`${a}% to ${a+bin}%: ${n} ${u}`,x:k%2==0?a+'%':''}}),{d:0,h:260});
+ const s=[...r].sort((a,b)=>a-b);document.getElementById(cap).textContent=`${r.length} ${u} · ${Math.round(r.filter(v=>v>0).length/r.length*100)}% positive · median ${pc(s[Math.floor(s.length/2)])} · best ${pc(s[s.length-1])} · worst ${pc(s[0])} · ${bin}% buckets`}
+function sync(){document.querySelectorAll('.tg button').forEach(b=>b.classList.toggle('on',b.dataset.m==MODE))}
+document.querySelectorAll('.tg button').forEach(b=>b.onclick=()=>{MODE=b.dataset.m;sync();draw()});sync();
+function draw(){
+ const ab=MODE=='a',cfg={log:1,h:420,...(ab?{lo:100,hi:200000,b:100,ticks:[100,300,1000,3000,10000,30000,100000]}:{})};
+ document.querySelectorAll('.cc').forEach(e=>e.textContent=ab?'Log scale, US$ price at each close':e.dataset.r);
+ const val=c=>ab?c:c/B[0]*100,tt=(l,c)=>`${l}: ${pc(c/B[0]*100-100,0)} cumulative · US$ ${fm(c,0)}`;
+ const Yr=[];D.d.forEach((d,i)=>{const y=d.slice(0,4);if(!Yr.length||Yr[Yr.length-1].y!=y)Yr.push({y,n:0});const o=Yr[Yr.length-1];o.n++;o.c=B[i]});
+ bars('c0',Yr.map((o,j)=>({v:val(o.c),c:col(o.c-(j?Yr[j-1].c:B[0])),p:o.n<12&&j>0,t:tt(o.y+(j==0?' (Sep–Dec)':o.n<12?' (partial)':''),o.c),x:o.y})),cfg);
+ bars('c2',Q.slice(1).map((q,j)=>({v:val(q.c),c:col(q.c-Q[j].c),p:q.n<3,t:tt(ql(q),q.c),x:q.k.endsWith('-1')?"'"+q.k.slice(2,4):''})),cfg);
+ bars('c1',B.slice(1).map((c,j)=>{const i=j+1;return{v:val(c),c:col(c-B[i-1]),p:i==N-1,t:tt(ml(i),c),x:D.d[i].endsWith('-01')?"'"+D.d[i].slice(2,4):''}}),cfg);
+ // 4 monthly returns
+ bars('c4',mr.slice(1).map((v,j)=>{const i=j+1;return{v,c:col(v),p:i==N-1,t:`${ml(i)}: ${pc(v)}`,x:D.d[i].endsWith('-01')?"'"+D.d[i].slice(2,4):''}}),{d:0,u:'%'});
+ // 5 quarterly returns
+ bars('c5',Q.slice(1).map((q,j)=>{const v=(q.c/Q[j].c-1)*100;return{v,c:col(v),p:q.n<3,t:`${ql(q)}: ${pc(v)}`,x:q.k.endsWith('-1')?"'"+q.k.slice(2,4):''}}),{d:0,u:'%'});
+ dist('c6',mr.slice(1),5,'ds','months');
+ dist('c7',Q.slice(1).map((q,j)=>(q.c/Q[j].c-1)*100),10,'ds2','quarters');
+
+ {const sv=document.getElementById('c8'),W8=sv.clientWidth||900,H8=200,P8={l:56,r:8,t:8,b:24};let mx=-1e9;const dd=B.map(c=>{mx=Math.max(mx,c);return{v:(c/mx-1)*100,a:mx}});
+  const mn=Math.floor(Math.min(...dd.map(d=>d.v))/20)*20,X8=i=>P8.l+i/(N-1)*(W8-P8.l-P8.r),Y8=v=>P8.t+(v/mn)*(H8-P8.t-P8.b);let g='';
+  for(let t=0;t>=mn;t-=20)g+=`<line x1="${P8.l}" x2="${W8-P8.r}" y1="${Y8(t)}" y2="${Y8(t)}" stroke="${t?'#ececec':'#999'}"/><text x="${P8.l-6}" y="${Y8(t)+4}" text-anchor="end" font-size="11" fill="#6f6f6f">${t}%</text>`;
+  D.d.forEach((d,i)=>{if(d.endsWith('-01')&&+d.slice(0,4)%2==1)g+=`<text x="${X8(i)}" y="${H8-7}" text-anchor="middle" font-size="11" fill="#6f6f6f">${d.slice(0,4)}</text>`});
+  const pts=dd.map((d,i)=>X8(i).toFixed(1)+','+Y8(d.v).toFixed(1)).join(' ');
+  g+=`<polygon points="${X8(0)},${Y8(0)} ${pts} ${X8(N-1)},${Y8(0)}" fill="rgba(143,58,28,.22)"/><polyline fill="none" stroke="${DK}" stroke-width="1.6" points="${pts}"/><line id="cur8" y1="8" y2="${H8-24}" stroke="#999" opacity="0"/>`;
+  sv.setAttribute('viewBox',`0 0 ${W8} ${H8}`);sv.style.height=H8+'px';sv.innerHTML=g;
+  const wi=dd.reduce((b,d,i)=>d.v<dd[b].v?i:b,0);
+  document.getElementById('ds8').textContent=`Distance from the running all-time high (monthly closes) · max ${fm(dd[wi].v,0)}% in ${ml(wi)} · now ${fm(dd[N-1].v,0)}%`;
+  sv.onmousemove=sv.ontouchmove=e=>{const t=e.touches?e.touches[0]:e,rc=sv.getBoundingClientRect(),i=Math.max(0,Math.min(N-1,Math.round(((t.clientX-rc.left)/rc.width*W8-P8.l)/(W8-P8.l-P8.r)*(N-1))));const c=sv.querySelector('#cur8');c.setAttribute('x1',X8(i));c.setAttribute('x2',X8(i));c.setAttribute('opacity',1);
+   document.getElementById('t8').textContent=`${ml(i)} · drawdown ${fm(dd[i].v,1)}% · ATH US$ ${fm(dd[i].a,0)} · close US$ ${fm(B[i],0)}`}}
+ // 3 comparison
+ const svg=document.getElementById('c3'),W=svg.clientWidth||900,H=380,P={l:56,r:8,t:8,b:24},S=[['btc','Bitcoin',OR],['dj','Dow Jones','#0f9d82'],['sp','S&P 500','#1f4fd8'],['rut','Russell 2000','#8a4fd0']];
+ const ser=S.map(s=>D[s[0]].map(v=>v/D[s[0]][0]*100)),lo3=Math.log(60),hi3=Math.log(30000),X=i=>P.l+i/(N-1)*(W-P.l-P.r),Y=v=>P.t+(hi3-Math.log(v))/(hi3-lo3)*(H-P.t-P.b);let g='';
+ [100,200,500,1000,2000,5000,10000,20000].forEach(t=>g+=`<line x1="${P.l}" x2="${W-P.r}" y1="${Y(t)}" y2="${Y(t)}" stroke="#ececec"/><text x="${P.l-6}" y="${Y(t)+4}" text-anchor="end" font-size="11" fill="#6f6f6f">${fm(t,0)}</text>`);
+ D.d.forEach((d,i)=>{if(d.endsWith('-01')&&+d.slice(0,4)%2==1)g+=`<text x="${X(i)}" y="${H-7}" text-anchor="middle" font-size="11" fill="#6f6f6f">${d.slice(0,4)}</text>`});
+ [3,2,1,0].forEach(k=>g+=`<polyline fill="none" stroke="${S[k][2]}" stroke-width="${k?1.5:2.4}" points="${ser[k].map((v,i)=>X(i).toFixed(1)+','+Y(v).toFixed(1)).join(' ')}"/>`);
+ svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.style.height=H+'px';svg.innerHTML=g+'<line id="cur" y1="8" y2="356" stroke="#999" opacity="0"/>';
+ svg.onmousemove=svg.ontouchmove=e=>{const t=e.touches?e.touches[0]:e,rc=svg.getBoundingClientRect(),i=Math.max(0,Math.min(N-1,Math.round(((t.clientX-rc.left)/rc.width*W-P.l)/(W-P.l-P.r)*(N-1))));const c=svg.querySelector('#cur');c.setAttribute('x1',X(i));c.setAttribute('x2',X(i));c.setAttribute('opacity',1);
+  document.getElementById('t3').textContent=ml(i)+' · '+S.map((s,k)=>s[1].split(' ')[0]+' '+fm(ser[k][i],0)).join(' · ')}}
+document.getElementById('leg').innerHTML=[['Bitcoin',OR],['Dow Jones','#0f9d82'],['S&P 500','#1f4fd8'],['Russell 2000','#8a4fd0']].map(s=>`<span><i style="background:${s[1]}"></i>${s[0]}</span>`).join('');
+// heatmaps
+(function(){const ys={};D.d.forEach((d,i)=>(ys[d.slice(0,4)]=ys[d.slice(0,4)]||[]).push(i));
+ const mm={},qq={};D.d.forEach((d,i)=>{if(mr[i]!=null)mm[d.slice(0,4)+'-'+(+d.slice(5))]=mr[i]});
+ Q.forEach((q,j)=>{if(j)qq[q.k]=(q.c/Q[j-1].c-1)*100});
+ function heat(id,names,val,sc){let h='<tr><th>Year</th>'+names.map(m=>`<th>${m}</th>`).join('')+'<th>Year</th></tr>';
+  Object.keys(ys).reverse().forEach(y=>{const ix=ys[y],prev=ys[y-1]?ys[y-1][ys[y-1].length-1]:ix[0];h+=`<tr><td>${y}</td>`;
+   names.forEach((_,k)=>{const v=val(y,k+1);if(v==null){h+='<td></td>';return}const a=Math.min(.9,.12+Math.abs(v)/sc);h+=`<td style="background:${v>=0?`rgba(247,147,26,${a})`:`rgba(143,58,28,${a})`};color:${a>.55?'#fff':'#1a1a1a'}">${fm(v,0).replace('-0','0')}</td>`});
+   const t=(B[ix[ix.length-1]]/B[prev]-1)*100;h+=`<td class="y" style="color:${t>=0?'#c76d00':'#8f3a1c'}">${pc(t,0)}</td></tr>`});
+  document.getElementById(id).innerHTML=h}
+ heat('g',MN,(y,k)=>mm[y+'-'+k]??null,45);
+})();
+(function(){const ys={};D.d.forEach((d,i)=>(ys[d.slice(0,4)]=ys[d.slice(0,4)]||[]).push(i));
+ const cg=(i,n)=>i-n>=0?((B[i]/B[i-n])**(12/n)-1)*100:null,f=(v,d=1)=>v==null?'<td>–</td>':`<td style="color:${v>=0?'#c76d00':DK}">${pc(v,d)}</td>`;
+ let h='<tr><th>Year</th><th>Price</th><th>Cum. Growth*</th><th>Change 1Y</th><th>CAGR 3Y</th><th>CAGR 5Y</th><th>CAGR 10Y</th></tr>';
+ Object.keys(ys).reverse().forEach(y=>{const i=ys[y][ys[y].length-1];
+  h+=`<tr><td>${y}${ys[y].length<12&&y>'2014'?' (to '+MN[+D.d[i].slice(5)-1]+')':''}</td><td>${fm(B[i],0)}</td>${f((B[i]/B[0]-1)*100,0)}${f(cg(i,12),0)}${f(cg(i,36),0)}${f(cg(i,60),0)}${f(cg(i,120),0)}</tr>`});
+ document.getElementById('ty').innerHTML=h})();
+draw();addEventListener('resize',draw);
+</script></body></html>
