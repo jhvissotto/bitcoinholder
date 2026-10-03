@@ -1,11 +1,12 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Bitcoin Holder</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%23f7931a'/%3E%3Ctext x='32' y='47' font-size='42' font-weight='700' text-anchor='middle' fill='%23fff' font-family='Arial,sans-serif'%3E%E2%82%BF%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{--or:#f7931a;--ink:#1a1a1a;--mut:#6f6f6f;--line:#ececec;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:0}body{margin:0;background:#fff;color:var(--ink);font:15px/1.5 'IBM Plex Sans',system-ui,sans-serif}
 header{background:#fff;border-bottom:3px solid var(--or);display:flex;align-items:center;gap:20px;padding:10px 16px}
-header h1{font-size:22px;margin:0;letter-spacing:-.01em;white-space:nowrap}header h1 b{color:var(--or)}
-nav{display:flex;gap:14px;overflow-x:auto;font-size:13px}nav a{color:var(--mut);text-decoration:none;white-space:nowrap}nav a:hover{color:var(--or)}
+header h1{font-size:40px;margin:0;letter-spacing:-.01em;white-space:nowrap}header h1 b{color:var(--or)}
+nav{scrollbar-width:none;display:flex;gap:14px;overflow-x:auto;font-size:13px}nav a{color:var(--mut);text-decoration:none;white-space:nowrap}nav a:hover{color:var(--or)}
 main{max-width:1000px;margin:0 auto;padding:36px 16px 64px}
 .card{border:1px solid var(--line);border-radius:10px;padding:22px 20px;margin-bottom:44px}
 h2{font-size:17px;margin:0 0 2px}.cap{color:var(--mut);font-size:13px;margin:0 0 16px}
@@ -18,10 +19,14 @@ td.y{border-left:1px solid var(--line);font-weight:600}
 .tg{float:right;display:flex;margin-left:8px}.tg button{font:inherit;font-size:12.5px;background:#fff;border:1px solid var(--or);color:var(--or);padding:2px 10px;cursor:pointer}.tg button:first-child{border-radius:6px 0 0 6px}.tg button:last-child{border-radius:0 6px 6px 0;border-left:0}.tg button.on{background:var(--or);color:#fff}
 #ty{table-layout:fixed;width:610px}#ty th,#ty td{padding:6px 8px;width:80px}#ty th:nth-child(1),#ty td:nth-child(1){width:100px}#ty th:nth-child(2),#ty td:nth-child(2){width:75px}#ty th:nth-child(3),#ty td:nth-child(3){width:105px}#ty th:nth-child(4),#ty td:nth-child(4){width:90px}
 footer{border-top:3px solid var(--or);padding:20px 16px 36px;text-align:center;color:var(--mut);font-size:12.5px}footer b{color:var(--ink);font-size:28px;letter-spacing:-.01em}footer b span{color:var(--or)}footer p{margin:6px 0 0}
+nav::-webkit-scrollbar{display:none}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:44px}.kpi{background:linear-gradient(145deg,#fafafa 0%,#ececec 100%);border:1px solid #dedede;border-radius:10px;padding:14px 14px;min-width:0}.kpi small{display:block;color:var(--mut);font-size:13px}.kpi b{display:block;font:500 21px 'IBM Plex Mono',monospace;margin:4px 0 2px}.kpi i{font-style:normal;color:var(--mut);font-size:12px}
+@media(max-width:760px){.kpis{grid-template-columns:repeat(2,1fr)}}
 .note{color:var(--mut);font-size:12.5px}
 </style></head><body>
 <header><h1>Bitcoin <b>Holder</b></h1><nav><a href="#ca">Performance · Yearly</a><a href="#q">Performance · Quarterly</a><a href="#m">Performance · Monthly</a><a href="#vs">BTC vs Indices</a><a href="#dd">Drawdown</a><a href="#yt">Yearly Data</a><a href="#qb">Returns · Quarterly</a><a href="#mb">Returns · Monthly</a><a href="#dist">Distribution</a><a href="#grid">Heatmap</a></nav></header>
 <main>
+<div class="kpis" id="kp"></div>
 <div class="card" id="ca"><div class="tg"><button data-m="r">Return</button><button data-m="a">Absolute</button></div><h2>Historical Performance · Yearly</h2><p class="cap cc" data-r="Log scale, base 100 = Sep/2014 close, year-end closes"></p><svg class="c" id="c0"></svg></div>
 <div class="card" id="q"><div class="tg"><button data-m="r">Return</button><button data-m="a">Absolute</button></div><h2>Historical Performance · Quarterly</h2><p class="cap cc" data-r="Log scale, base 100 = Sep/2014 close, quarter-end closes"></p><svg class="c" id="c2"></svg></div>
 <div class="card" id="m"><div class="tg"><button data-m="r">Return</button><button data-m="a">Absolute</button></div><h2>Historical Performance · Monthly</h2><p class="cap cc" data-r="Log scale, base 100 = Sep/2014 close, month-end closes"></p><svg class="c" id="c1"></svg></div>
@@ -113,5 +118,26 @@ document.getElementById('leg').innerHTML=[['Bitcoin',OR],['Dow Jones','#0f9d82']
  Object.keys(ys).reverse().forEach(y=>{const i=ys[y][ys[y].length-1];
   h+=`<tr><td>${y}${ys[y].length<12&&y>'2014'?' (to '+MN[+D.d[i].slice(5)-1]+')':''}</td><td>${fm(B[i],0)}</td>${f((B[i]/B[0]-1)*100,0)}${f(cg(i,12),0)}${f(cg(i,36),0)}${f(cg(i,60),0)}${f(cg(i,120),0)}</tr>`});
  document.getElementById('ty').innerHTML=h})();
+(function(){const L=N-1,cg=n=>((B[L]/B[L-n])**(12/n)-1)*100,k=(a,v,s,c)=>`<div class="kpi"><small>${a}</small><b style="color:${c||'inherit'}">${v}</b><i>${s}</i></div>`,ng=v=>v<0?DK:'#c76d00';
+ const wm=mr.reduce((b,v,i)=>i&&v<mr[b]?i:b,1),qs=Q.map((q,j)=>j&&q.n>=3?(q.c/Q[j-1].c-1)*100:null),wq=qs.reduce((b,v,j)=>v!=null&&(b==null||v<qs[b])?j:b,null);
+ let m=-1e9,dm=0,di=0;B.forEach((c,i)=>{m=Math.max(m,c);const d=(c/m-1)*100;if(d<dm){dm=d;di=i}});
+ const r=mr.slice(1),rs=[...r].sort((a,b)=>a-b),av=r.reduce((x,y)=>x+y,0)/r.length,md=rs.length%2?rs[(rs.length-1)/2]:(rs[rs.length/2-1]+rs[rs.length/2])/2,qv=qs.filter(v=>v!=null),pm=r.filter(v=>v>0).length,pq=qv.filter(v=>v>0).length;
+ const ye={};D.d.forEach((d,i)=>ye[d.slice(0,4)]=i);const yr=Object.keys(ye).filter(y=>ye[y-1]!=null&&D.d.filter(d=>d.startsWith(y)).length==12).map(y=>[y,(B[ye[y]]/B[ye[y-1]]-1)*100]),py=yr.filter(a=>a[1]>0).length,wy=yr.reduce((b,a)=>a[1]<b[1]?a:b);
+ const cum=(B[L]/B[0]-1)*100,tot=((B[L]/B[0])**(12/L)-1)*100;
+ document.getElementById('kp').innerHTML=[
+  k('Current Price','US$ '+fm(B[L],0),ml(L)),
+  k('Cumulative Return',pc(cum,0),'since Sep/2014',ng(cum)),
+  k('CAGR · Total',pc(tot,0),'since Sep/2014',ng(tot)),
+  k('CAGR · 10Y',pc(cg(120),0),'per year',ng(cg(120))),
+  k('CAGR · 5Y',pc(cg(60),0),'per year',ng(cg(60))),
+  k('Positive Years',fm(py/yr.length*100,0)+'%',py+' of '+yr.length+' full years'),
+  k('Positive Quarters',fm(pq/qv.length*100,0)+'%',pq+' of '+qv.length+' quarters'),
+  k('Positive Months',fm(pm/r.length*100,0)+'%',pm+' of '+r.length+' months'),
+  k('Average Monthly Return',pc(av,1),'mean, all months',ng(av)),
+  k('Median Monthly Return',pc(md,1),'middle month',ng(md)),
+  k('Worst Year',pc(wy[1],0),wy[0],DK),
+  k('Worst Quarter',pc(qs[wq],0),ql(Q[wq]),DK),
+  k('Worst Month',pc(mr[wm],0),ml(wm),DK),
+  k('Max Drawdown',fm(dm,0)+'%','trough '+ml(di),DK)].join('')})();
 draw();addEventListener('resize',draw);
 </script></body></html>
